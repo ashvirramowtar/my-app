@@ -10,12 +10,14 @@ import { LoaderComponent } from '../loader/loader.component';
 	styleUrl: './chat.component.css'
 })
 export class ChatComponent implements OnInit {
+	public isLoading: boolean;
 	public message: string;
-	public messages: string[];
+	public texts: string[];
 	
 	public ngOnInit(): void {
+		this.isLoading = false;
 		this.message = "";
-		this.messages = [];
+		this.texts = ["first message", "second message"];
 	}
 	
 	public sendMessage(): void {

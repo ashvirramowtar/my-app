@@ -12,8 +12,17 @@
         </div>
         
         <div class="row">
+            <div>&nbsp;</div>
             <div class="col-md-12">
-                <app-loader></app-loader>
+                <span *ngFor="let text of texts; let i = index">
+                    <div *ngIf="i % 2 == 0" style="text-align: right;">
+                        <span>{{text}}</span>
+                    </div>
+                    <div *ngIf="i % 2 == 1" style="text-align: left;">
+                        <app-loader *ngIf="isLoading"></app-loader>
+                        <span *ngIf="!isLoading">{{text}}</span>
+                    </div>
+                </span>
             </div>
         </div>
     </div>
