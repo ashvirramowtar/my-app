@@ -19,10 +19,10 @@
                         <span>{{text}}</span>
                     </div>
                     <div *ngIf="i % 2 == 1" style="text-align: left;">
-                        <app-loader *ngIf="isLoading"></app-loader>
-                        <span *ngIf="!isLoading">{{text}}</span>
+                        <span>{{text}}</span>
                     </div>
                 </span>
+                <app-loader *ngIf="isLoading"></app-loader>
             </div>
         </div>
     </div>

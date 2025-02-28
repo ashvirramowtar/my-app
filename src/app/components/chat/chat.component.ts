@@ -15,6 +15,7 @@ export class ChatComponent implements OnInit {
 	public isLoading: boolean;
 	public message: string;
 	public texts: string[];
+	private responses: string[];
 
 	public constructor(private messageService: MessageService) {
 
@@ -24,18 +25,37 @@ export class ChatComponent implements OnInit {
 		this.isLoading = false;
 		this.message = "";
 		this.texts = [];
+
+		this.responses = [
+			"the fock u said to me??",
+			"i don't understand",
+			"i dunno"
+		]
 	}
 	
 	public sendMessage(): void {
-		this.texts.push(this.message);
-		this.clearMessage();
-
-		this.messageService.send(this.message).subscribe((response: any) => {
+		if (this.message.trim().length > 0) {
+			this.texts.push(this.message);
+			this.clearMessage();
+	
+			this.chat();
+		} 
+		
+		/*this.messageService.send(this.message).subscribe((response: any) => {
 			let x = response;
-		});
+		});*/
 	};
 
 	public clearMessage(): void {
 		this.message = "";
+	}
+	
+	private chat(): void {
+		let index = Math.floor(Math.random() * (this.responses.length));
+		this.isLoading = true;
+		setTimeout(() => {
+			this.texts.push( this.responses[index]);
+			this.isLoading = false;
+		}, 1500);
 	}
 }
