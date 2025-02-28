@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-md-6">
+        <img src="/assets/rick_morty_PNG25.png" />
+    </div>
+    <div class="col-md-6">
+        <div class="row">
+            <div class="input-group">
+                <input type="text" class="form-control" (keyup.enter)="sendMessage()" placeholder="Type your message here..."
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="message">
+                <button class="btn btn-primary" type="button" (keyup.enter)="sendMessage()">Send</button>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <app-loader></app-loader>
+            </div>
+        </div>
+    </div>
+</div>
