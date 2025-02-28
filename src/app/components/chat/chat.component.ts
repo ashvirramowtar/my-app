@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule  } from "@angular/forms";
 import { LoaderComponent } from '../loader/loader.component';
 import { MessageService } from '../../services/message.service';
+import { Validator } from '../../directives/validator';
 
 @Component({
 	selector: 'app-chat',
@@ -29,12 +30,13 @@ export class ChatComponent implements OnInit {
 		this.responses = [
 			"the fock u said to me??",
 			"i don't understand",
-			"i dunno"
+			"i dunno",
+			"what??"
 		]
 	}
 	
 	public sendMessage(): void {
-		if (this.message.trim().length > 0) {
+		if (Validator.hasValue(this.message)) {
 			this.texts.push(this.message);
 			this.clearMessage();
 	
