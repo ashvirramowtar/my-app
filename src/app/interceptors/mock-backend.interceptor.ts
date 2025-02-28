@@ -9,11 +9,6 @@ const METHOD = {
     POST: "POST"
 };
 
-const CREDENTIAL = {
-    USERNAME: "testuser",
-    PASSWORD: "Momentum@1"
-};
-
 @Injectable()
 export class MockBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -27,45 +22,15 @@ export class MockBackendInterceptor implements HttpInterceptor {
             .pipe(dematerialize());
 
         function handleRoute() {
-            switch (true) {
-                case ((url.endsWith('login')) && (method == METHOD.POST)):
-                    return login();
-                case ((url.endsWith('getall')) && (method == METHOD.GET)):
-                    return getAll();
-                default:
-                    return next.handle(request);
-            }    
+            return send();  
         }
 
-        function login() {
-            const { username, password } = body;
-            if (Validator.isEqualIgnoreCase(CREDENTIAL.USERNAME, username) && Validator.isEqual(CREDENTIAL.PASSWORD, password))
-                return ok({ token: 'valid-token'});
-            else 
-                return unauthorized();
+        function send() {
+            return ok({ response: 'hi there' });
         }
 
-        function getAll() {
-            if (isLoggedIn())
-                return ok({ agreements: AGREEMENTS });
-            else
-                return unauthorized();
-        }
-
-        function ok(body?) {
+        function ok(body: any) {
             return of(new HttpResponse({ status: 200, body }))
-        }
-
-        function error(message) {
-            return throwError({ error: { message } });
-        }
-
-        function unauthorized() {
-            return throwError({ status: 401, error: { message: 'Username or password is incorrect.' } });
-        }
-
-        function isLoggedIn() {
-            return headers.get('Authorization') == 'valid-token';
         }
     }
 }

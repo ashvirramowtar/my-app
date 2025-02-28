@@ -7,7 +7,7 @@
             <div class="input-group">
                 <input type="text" class="form-control" (keyup.enter)="sendMessage()" placeholder="Type your message here..."
                     [ngModelOptions]="{standalone: true}" [(ngModel)]="message">
-                <button class="btn btn-primary" type="button" (keyup.enter)="sendMessage()">Send</button>
+                <button class="btn btn-primary" type="button" (keyup.enter)="sendMessage()" (click)="sendMessage()">Send</button>
             </div>
         </div>
         
