@@ -4,6 +4,7 @@ import { FormsModule  } from "@angular/forms";
 import { LoaderComponent } from '../loader/loader.component';
 import { MessageService } from '../../services/message.service';
 import { Validator } from '../../directives/validator';
+import { ChatRoom } from '../../models/chat-room';
 
 @Component({
 	selector: 'app-chat',
@@ -18,14 +19,22 @@ export class ChatComponent implements OnInit {
 	public texts: string[];
 	private responses: string[];
 
-	public constructor(private messageService: MessageService) {
+	public chatRooms: ChatRoom[];
+	public selectedChatRoom: ChatRoom;
 
+	public constructor(private messageService: MessageService) {
+		
 	}
 	
 	public ngOnInit(): void {
 		this.isLoading = false;
 		this.message = "";
 		this.texts = [];
+
+		this.chatRooms = [];
+		this.chatRooms.push(new ChatRoom("rick", ["Rick Sanchez"]));
+		this.chatRooms.push(new ChatRoom("pap", ["Panic", "Pain"]));
+		this.chatRooms.push(new ChatRoom("itcrowd", ["Mauritz", "Ashvir", "Chanda"]));
 
 		this.responses = [
 			"the fock u said to me??",
