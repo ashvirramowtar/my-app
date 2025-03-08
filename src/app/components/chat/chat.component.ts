@@ -8,7 +8,7 @@ import { ChatRoom } from '../../models/chat-room';
 
 @Component({
 	selector: 'app-chat',
-	imports: [ CommonModule, FormsModule, LoaderComponent ],
+	standalone: false,
 	providers: [ MessageService ],
 	templateUrl: './chat.component.html',
 	styleUrl: './chat.component.css'
