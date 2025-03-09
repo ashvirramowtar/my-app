@@ -1,31 +1,103 @@
-<div class="row">
-    <div class="col-md-4">
-        <div class="row">
-            <select class="form-select" id="selectedChatRoom" name="selectedChatRoom" [(ngModel)]="selectedChatRoom">
-                <option *ngFor="let chatRoom of chatRooms; let i = index" [ngValue]="chatRoom">{{ chatRoom.friendlyName }}</option>
-            </select>
-            <img class="img" src="/assets/rick_morty_PNG25.png" />
-        </div>
-    </div>
-    <div class="col-md-8">
-        <div class="row">
-            <div class="input-group">
-                <input type="text" class="form-control" (keyup.enter)="sendTextMessage()" placeholder="Type your message here..."
-                    [ngModelOptions]="{standalone: true}" [(ngModel)]="textMessage">
-                <button class="btn btn-primary main-button" style="width: 20%;" type="button"
-                    (keyup.enter)="sendTextMessage()" (click)="sendTextMessage()">Send</button>
-            </div>
-        </div>
-        
-        <div class="row" style="overflow: hidden">
-            <div class="col-md-12" style="padding-top: 32px; padding-left: 10px; overflow-y: scroll; max-height: 600px;">
-                <span *ngFor="let message of conversation.messages">
-                    <div [ngClass]="message.entity.type == 'Person' ? 'personMessage' : 'characterMessage'">
-                        <div><span style="font-weight: bold;">{{message.entity.name}}</span></div>
-                        <div><p>{{message.text}}</p></div>
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-lg-12">
+            <div class="card chat-app">
+                <div id="plist" class="people-list">
+                    <ul class="list-unstyled chat-list mt-2 mb-0">
+                        <li class="clearfix">
+                            <img src="/assets/avatars/rick-sanchez.png" alt="avatar">
+                            <div class="about">
+                                <div class="name">Rick Sanchez</div>
+                                <!--<div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>-->
+                            </div>
+                        </li>
+                        <li class="clearfix">
+                            <img src="/assets/avatars/panic-and-pain.png" alt="avatar">
+                            <div class="about">
+                                <div class="name">Panic and Pain</div>
+                                <!--<div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>-->
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="chat">
+                    <div class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                    <img src="/assets/avatars/rick-sanchez.png" alt="avatar">
+                                </a>
+                                <div class="chat-about">
+                                    <h6 class="m-b-0">Rick Sanchez</h6>
+                                    <!--<small>Last seen: 2 hours ago</small>-->
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </span>
-                <app-loader *ngIf="isLoading"></app-loader>
+                    <div id="chatWindow" class="chat-history" style="overflow-y: scroll !important; height:500px !important;">
+                        <ul class="m-b-0">
+                            <li class="clearfix" *ngFor="let message of conversation.messages; let i = index;">
+                                <div class="message-data" [ngClass]="message.entity.type == 'Person' ? 'text-right' : ''">
+                                    <span class="message-data-name">{{message.entity.name}}</span>
+                                </div>
+                                <div class="message" 
+                                    [ngClass]="message.entity.type == 'Person' ? 'person-message float-right' : 'character-message'">
+                                    {{message.text}}
+                                </div>
+                            </li>
+                            <li class="clearfix" *ngIf="isLoading">
+                                <div class="message">
+                                    <app-loader [characterName]="'Rick'"></app-loader>
+                                </div>
+                            </li>
+
+                            <!--<li class="clearfix">
+                                <div class="message-data text-right">
+                                    <span class="message-data-time">10:10 AM, Today</span>
+                                </div>
+                                <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">10:12 AM, Today</span>
+                                </div>
+                                <div class="message my-message">Are we meeting today?</div>                                    
+                            </li>
+                            <li class="clearfix">
+                                <div class="message-data text-right">
+                                    <span class="message-data-time">10:10 AM, Today</span>
+                                </div>
+                                <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
+                            </li>                             
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">10:15 AM, Today</span>
+                                </div>
+                                <div class="message my-message">Project has been already finished and I have results to show you.</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">10:15 AM, Today</span>
+                                </div>
+                                <div class="message my-message">Project has been already finished and I have results to show you.</div>
+                            </li>
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">10:15 AM, Today</span>
+                                </div>
+                                <div class="message my-message">Project has been already finished and I have results to show you.</div>
+                            </li>-->
+                        </ul>
+                    </div>
+                    <div class="chat-message clearfix">
+                        <div class="input-group">
+                            <input type="text" class="form-control" (keyup.enter)="sendTextMessage()" placeholder="Type your message here..."
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="textMessage">
+                            <button class="btn btn-primary main-button" style="width: 20%;" type="button"
+                                (keyup.enter)="sendTextMessage()" (click)="sendTextMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

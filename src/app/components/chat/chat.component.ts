@@ -38,10 +38,6 @@ export class ChatComponent implements OnInit {
 		this.textMessage = "";
 
 		this.conversation = new Conversation();
-		this.conversation.addPersonMessage("Ashvir", "Hello there.");
-		this.conversation.addCharacterMessage("Rick", "Wubba dubba lub lub!")
-		this.conversation.addPersonMessage("Ashvir", "How are you?");
-		this.conversation.addCharacterMessage("Rick", "I need that ice cream!")
 
 		this.responses = [
 			"the fock u said to me??",
@@ -57,6 +53,8 @@ export class ChatComponent implements OnInit {
 			this.clearTextMessage();
 	
 			this.chat();
+
+			this.scrollDown();
 		} 
 		
 		/*this.messageService.send(this.message).subscribe((response: any) => {
@@ -75,5 +73,16 @@ export class ChatComponent implements OnInit {
 			this.conversation.addCharacterMessage("Rick", this.responses[index]);
 			this.isLoading = false;
 		}, 1500);
+	}
+
+	private scrollDown(): void {
+		const element = document.getElementById("chatWindow")!;
+		element.scrollIntoView({ behavior: "smooth", block: "start", inline: "nearest" });
+		element.scrollTop = element.scrollHeight;
+		//element.animate({ scrollTop: element.scrollHeight, }, 1500);
+	}
+
+	public ngAfterViewChecked(): void {
+		this.scrollDown();
 	}
 }
