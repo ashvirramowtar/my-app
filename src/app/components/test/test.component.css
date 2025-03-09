@@ -254,3 +254,7 @@ body{
         overflow-x: auto
     }
 }
+
+.text-right {
+    text-align: right;
+}
