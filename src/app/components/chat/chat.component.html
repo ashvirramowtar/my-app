@@ -1,15 +1,13 @@
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="row">
-            <div class="col-md-6">
-                <select class="form-select" id="selectedChatRoom" name="selectedChatRoom" [(ngModel)]="selectedChatRoom">
-                    <option *ngFor="let chatRoom of chatRooms; let i = index" [ngValue]="chatRoom">{{ chatRoom.friendlyName }}</option>
-                </select>
-                <img src="/assets/rick_morty_PNG25.png" />
-            </div>
+            <select class="form-select" id="selectedChatRoom" name="selectedChatRoom" [(ngModel)]="selectedChatRoom">
+                <option *ngFor="let chatRoom of chatRooms; let i = index" [ngValue]="chatRoom">{{ chatRoom.friendlyName }}</option>
+            </select>
+            <img class="img" src="/assets/rick_morty_PNG25.png" />
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
         <div class="row">
             <div class="input-group">
                 <input type="text" class="form-control" (keyup.enter)="sendMessage()" placeholder="Type your message here..."
