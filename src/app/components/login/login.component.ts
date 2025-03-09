@@ -11,6 +11,7 @@ import { ValidatePassword } from '../../directives/validator-password.directive'
 	styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
+    isLoggingIn: boolean;
 	emailAddress: FormControl;
     password: FormControl;
     message: string;
@@ -20,9 +21,10 @@ export class LoginComponent implements OnInit {
     }
 
     public ngOnInit(): void {
+        this.isLoggingIn = false;
         this.message = "";
-        this.emailAddress = new FormControl("ashvirramowtar@gmail.com", { validators: ValidateEmailAddress, updateOn: 'blur' });
-        this.password = new FormControl("ashvirramowtar@gmail.com", { validators: ValidatePassword, updateOn: 'blur' });
+        this.emailAddress = new FormControl("asd@asd.com", { validators: ValidateEmailAddress, updateOn: 'blur' });
+        this.password = new FormControl("asd", { validators: ValidatePassword, updateOn: 'blur' });
     }
 
     public login(): void {
@@ -32,6 +34,12 @@ export class LoginComponent implements OnInit {
         this.emailAddress.updateValueAndValidity();
         this.password.updateValueAndValidity();
 
-        this.router.navigate(["chat"])
+        if (this.emailAddress.valid && this.password.valid) {
+            this.isLoggingIn = true;
+            setTimeout(() => { 
+                this.isLoggingIn = false;
+                this.router.navigate(["chat"])
+            }, 1000);
+        }
     }
 }

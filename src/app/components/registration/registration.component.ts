@@ -6,6 +6,7 @@ import { ValidateCellphoneNumber } from '../../directives/validator-cellphone-nu
 import { ValidateEmailAddress } from '../../directives/validator-email-address.directive';
 import { ValidatePassword } from '../../directives/validator-password.directive';
 import { ValidateConfirmPassword } from '../../directives/validator-confirm-password.directive';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-registration',
@@ -14,6 +15,7 @@ import { ValidateConfirmPassword } from '../../directives/validator-confirm-pass
 	styleUrl: './registration.component.css'
 })
 export class RegistrationComponent implements OnInit {
+	isRegistering: boolean;
 	firstName: FormControl;
 	lastName: FormControl;
 	cellphoneNumber: FormControl;
@@ -23,6 +25,7 @@ export class RegistrationComponent implements OnInit {
 	message: string;
 		
 	public ngOnInit(): void {
+		this.isRegistering = false;
 		this.message = "";
 		this.firstName = new FormControl("", { validators: ValidateFirstName, updateOn: 'blur' });
 		this.lastName = new FormControl("", { validators: ValidateLastName, updateOn: 'blur' });
@@ -32,7 +35,7 @@ export class RegistrationComponent implements OnInit {
 		this.confirmPassword = new FormControl("", { validators: ValidateConfirmPassword(this.password.value), updateOn: 'blur'});
 	}
 
-	constructor() {
+	constructor(private router: Router) {
 		
 	}
 
@@ -60,5 +63,14 @@ export class RegistrationComponent implements OnInit {
 		this.confirmPassword.updateValueAndValidity();
 
 		this.reinitialisePasswordValidators();
+
+		if (this.firstName.valid && this.lastName.valid && this.cellphoneNumber.valid 
+				&& this.emailAddress.valid && this.password.valid && this.confirmPassword.valid) {
+            this.isRegistering = true;
+            setTimeout(() => { 
+                this.isRegistering = false;
+                this.router.navigate(["login"])
+            }, 1000);
+        }
 	}	
 }

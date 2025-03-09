@@ -4,7 +4,7 @@ import { Error } from '../models/error';
 
 export function ValidateFirstName(control: AbstractControl): { [key: string]: any } | null {
 
-    if (control.touched) {
+    if (control.touched || control.dirty) {
         let value = control.value;
         if (!Validator.hasValue(value))
             return new Error("Please enter your first name.");

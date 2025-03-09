@@ -60,3 +60,13 @@
     justify-content: center;
     align-items: center;
 }
+
+a {
+    font-weight: bold !important;
+    cursor: pointer !important; 
+}
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+}

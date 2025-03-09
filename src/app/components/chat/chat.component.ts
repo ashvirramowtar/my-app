@@ -6,6 +6,7 @@ import { MessageService } from '../../services/message.service';
 import { Validator } from '../../directives/validator';
 import { ChatRoom } from '../../models/chat-room';
 import { Conversation } from '../../models/conversation';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-chat',
@@ -15,7 +16,9 @@ import { Conversation } from '../../models/conversation';
 	styleUrl: './chat.component.css'
 })
 export class ChatComponent implements OnInit {
-	isLoading: boolean;
+	isTyping: boolean;
+	isLoggingOut: boolean;
+
 	chatRooms: ChatRoom[];
 	selectedChatRoom: ChatRoom;
 	textMessage: string;
@@ -23,12 +26,13 @@ export class ChatComponent implements OnInit {
 
 	private responses: string[];
 
-	public constructor(private messageService: MessageService) {
+	public constructor(private messageService: MessageService, private router: Router) {
 		
 	}
 	
 	public ngOnInit(): void {
-		this.isLoading = false;
+		this.isTyping = false;
+		this.isLoggingOut = false;
 
 		this.chatRooms = [];
 		this.chatRooms.push(new ChatRoom("rick", ["Rick Sanchez"]));
@@ -68,10 +72,10 @@ export class ChatComponent implements OnInit {
 	
 	private chat(): void {
 		let index = Math.floor(Math.random() * (this.responses.length));
-		this.isLoading = true;
+		this.isTyping = true;
 		setTimeout(() => {
 			this.conversation.addCharacterMessage("Rick", this.responses[index]);
-			this.isLoading = false;
+			this.isTyping = false;
 		}, 1500);
 	}
 
@@ -84,5 +88,13 @@ export class ChatComponent implements OnInit {
 
 	public ngAfterViewChecked(): void {
 		this.scrollDown();
+	}
+
+	public logOut(): void {
+		this.isLoggingOut = true;
+        setTimeout(() => { 
+            this.isLoggingOut = false;
+            this.router.navigate(["login"])
+        }, 1000);
 	}
 }
