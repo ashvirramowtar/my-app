@@ -10,21 +10,19 @@
     <div class="col-md-8">
         <div class="row">
             <div class="input-group">
-                <input type="text" class="form-control" (keyup.enter)="sendMessage()" placeholder="Type your message here..."
-                    [ngModelOptions]="{standalone: true}" [(ngModel)]="message">
-                <button class="btn btn-primary" type="button" (keyup.enter)="sendMessage()" (click)="sendMessage()">Send</button>
+                <input type="text" class="form-control" (keyup.enter)="sendTextMessage()" placeholder="Type your message here..."
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="textMessage">
+                <button class="btn btn-primary main-button" style="width: 20%;" type="button"
+                    (keyup.enter)="sendTextMessage()" (click)="sendTextMessage()">Send</button>
             </div>
         </div>
         
-        <div class="row">
-            <div>&nbsp;</div>
-            <div class="col-md-12">
-                <span *ngFor="let text of texts; let i = index">
-                    <div *ngIf="i % 2 == 0" style="text-align: right;">
-                        <span>{{text}}</span>
-                    </div>
-                    <div *ngIf="i % 2 == 1" style="text-align: left;">
-                        <span>{{text}}</span>
+        <div class="row" style="overflow: hidden">
+            <div class="col-md-12" style="padding-top: 32px; padding-left: 10px; overflow-y: scroll; max-height: 600px;">
+                <span *ngFor="let message of conversation.messages">
+                    <div [ngClass]="message.entity.type == 'Person' ? 'personMessage' : 'characterMessage'">
+                        <div><span style="font-weight: bold;">{{message.entity.name}}</span></div>
+                        <div><p>{{message.text}}</p></div>
                     </div>
                 </span>
                 <app-loader *ngIf="isLoading"></app-loader>
