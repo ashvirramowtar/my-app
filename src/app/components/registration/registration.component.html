@@ -1,0 +1,47 @@
+<div>
+    <h1 style="text-align: center; padding-bottom: 48px;">Register</h1>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <form (ngSubmit)="register()">
+                <div class="form-group padding">
+                    <input class="form-control" id="firstName" placeholder="First name" type="text" [formControl]="firstName"
+                        [ngClass]="firstName.touched ? firstName.errors != null ? 'is-invalid' : 'is-valid' : ''" />
+                    <div class="error">{{firstName.errors?.message}}&nbsp;</div>
+                </div>
+                <div class="form-group padding">
+                    <input class="form-control" id="lastName" placeholder="Last name" type="text" [formControl]="lastName"
+                        [ngClass]="lastName.touched ? lastName.errors != null ? 'is-invalid' : 'is-valid' : ''" />
+                    <div class="error">{{lastName.errors?.message}}&nbsp;</div>
+                </div>
+                <div class="form-group padding">
+                    <input class="form-control" id="cellphoneNumber" placeholder="Cell phone number" type="text" [formControl]="cellphoneNumber"
+                        [ngClass]="cellphoneNumber.touched ? cellphoneNumber.errors != null ? 'is-invalid' : 'is-valid' : ''" />
+                    <div class="error">{{cellphoneNumber.errors?.message}}&nbsp;</div>
+                </div>
+                <div class="form-group padding">
+                    <input class="form-control" id="emailAddress" placeholder="Email address" type="text" [formControl]="emailAddress"
+                        [ngClass]="emailAddress.touched ? emailAddress.errors != null ? 'is-invalid' : 'is-valid' : ''" />
+                    <div class="error">{{emailAddress.errors?.message}}&nbsp;</div>
+                </div>
+                <div class="form-group padding">
+                    <input class="form-control" id="password" placeholder="Password" type="password" [formControl]="password"
+                        [ngClass]="password.touched ? password.errors != null ? 'is-invalid' : 'is-valid' : ''"
+                        (blur)="reinitialisePasswordValidators()" />
+                    <div class="error">{{password.errors?.message}}&nbsp;</div>
+                </div>
+                <div class="form-group padding">
+                    <input class="form-control" id="confirmPassword" placeholder="Confirm password" type="password" [formControl]="confirmPassword"
+                        [ngClass]="confirmPassword.touched ? confirmPassword.errors != null ? 'is-invalid' : 'is-valid' : ''"
+                        (blur)="reinitialisePasswordValidators()" />
+                    <div class="error">{{confirmPassword.errors?.message}}&nbsp;</div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary main-button" type="submit">Register</button>
+                    <div class="error" style="text-align: center; padding: 16px;">{{message}}</div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>

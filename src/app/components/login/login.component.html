@@ -5,13 +5,13 @@
         <div class="col-md-4">
             <form (ngSubmit)="login()">
                 <div class="form-group padding">
-                    <input class="form-control" [ngClass]="username.errors != null ? 'is-invalid' : ''" 
-                        id="username" placeholder="Username" type="text" [formControl]="username"/>
-                    <div class="error">{{username.errors?.message}}&nbsp;</div>
+                    <input class="form-control" id="emailAddress" placeholder="Email address" type="text" [formControl]="emailAddress"
+                        [ngClass]="emailAddress.touched ? emailAddress.errors != null ? 'is-invalid' : 'is-valid' : ''" />
+                    <div class="error">{{emailAddress.errors?.message}}&nbsp;</div>
                 </div>
                 <div class="form-group padding">
-                    <input class="form-control" [ngClass]="password.errors != null ? 'is-invalid' : ''" 
-                        id="password" placeholder="Password" type="password" [formControl]="password"/>
+                    <input class="form-control" id="password" placeholder="Password" type="password" [formControl]="password"
+                        [ngClass]="password.touched ? password.errors != null ? 'is-invalid' : 'is-valid' : ''" />
                     <div class="error">{{password.errors?.message}}&nbsp;</div>
                 </div>
                 <div class="form-group">

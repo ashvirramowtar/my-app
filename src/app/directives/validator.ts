@@ -120,9 +120,9 @@ export class Validator {
         return false;
     }
 
-    public static hasAnAlphabet(text: string): boolean {
-        for (let i=0; i<text.length; i++)
-            if (this.isAnAlphabet(text[i]))
+    public static hasAnAlphabet(value: string): boolean {
+        for (let i=0; i<value.length; i++)
+            if (this.isAnAlphabet(value[i]))
                 return true;
 
         return false;
@@ -133,7 +133,7 @@ export class Validator {
     }
 
     public static getTextWithoutWhiteSpaces(value: string): string {
-        return value !==  undefined ? (value.toString().replace(/\s/g, '')) : '';
+        return (value !== undefined) ? (value.toString().replace(/\s/g, '')) : '';
     }
 
     public static isGreaterThanMinimumAmount(value: string, minimumAmount: number): boolean {
@@ -312,5 +312,19 @@ export class Validator {
 
     public static getTextReplacedDotsWithComma(value: string): string {
         return value.replace(".", ",");
+    }
+
+    public static isCellphoneNumberValid(value: string): boolean {
+        let valueWithoutWhiteSpaces = this.getTextWithoutWhiteSpaces(value);
+        
+        if (valueWithoutWhiteSpaces.startsWith("+")) {
+            let number = valueWithoutWhiteSpaces.substring(1);
+            return (this.isOfMinimumLength(number, 10) && this.isNumeric(number) && (number.charAt(0) != '0'))
+        }
+        else if (valueWithoutWhiteSpaces.startsWith("0")) {
+            return (this.isOfMinimumLength(valueWithoutWhiteSpaces, 10) && this.isNumeric(valueWithoutWhiteSpaces));
+        }
+
+        return false;
     }
 }

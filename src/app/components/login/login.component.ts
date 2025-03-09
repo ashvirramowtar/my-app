@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ValidateUsername } from '../../directives/validator-username.directive'
+import { ValidateEmailAddress } from '../../directives/validator-email-address.directive'
 import { ValidatePassword } from '../../directives/validator-password.directive'
 
 @Component({
@@ -11,7 +11,7 @@ import { ValidatePassword } from '../../directives/validator-password.directive'
 	styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-	username: FormControl;
+	emailAddress: FormControl;
     password: FormControl;
     message: string;
 
@@ -21,15 +21,15 @@ export class LoginComponent implements OnInit {
 
     public ngOnInit(): void {
         this.message = "";
-        this.username = new FormControl("", { validators: ValidateUsername, updateOn: 'blur' });
+        this.emailAddress = new FormControl("", { validators: ValidateEmailAddress, updateOn: 'blur' });
         this.password = new FormControl("", { validators: ValidatePassword, updateOn: 'blur' });
     }
 
     public login(): void {
-        this.username.markAsTouched();
+        this.emailAddress.markAsTouched();
         this.password.markAsTouched();
         
-        this.username.updateValueAndValidity();
+        this.emailAddress.updateValueAndValidity();
         this.password.updateValueAndValidity();
     }
 }
