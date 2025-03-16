@@ -12,7 +12,7 @@ export class HttpService {
     }
 
     protected getDomain(): string {
-        let domain = 'www.mockbackend.co.za';
+        let domain = 'http://localhost:5250';
 
         return domain;
     }

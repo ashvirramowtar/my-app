@@ -1,17 +1,17 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpService } from "./http.service";
 
 const ENDPOINT = {
-    SEND: 'send',
+    SEND: 'text?model=',
 };
 
 @Injectable({
     providedIn: 'root'
 })
 export class MessageService extends HttpService {
-    private applicationName = "/message/";
+    private applicationName = "/api/";
 
     constructor(http: HttpClient) {
         super(http);
@@ -24,7 +24,7 @@ export class MessageService extends HttpService {
         console.log("current path: " + this.path);
     }
 
-    public send(message: string): Observable<any> {
-        return super.post(ENDPOINT.SEND, message);
+    public sendText(characterName: string, textMessage: string): Observable<any> {
+        return super.post(ENDPOINT.SEND + characterName, { Prompt: textMessage, Model: characterName });
     }
 }

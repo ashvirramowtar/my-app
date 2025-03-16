@@ -7,6 +7,8 @@ import { Validator } from '../../directives/validator';
 import { ChatRoom } from '../../models/chat-room';
 import { Conversation } from '../../models/conversation';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+//import { TextMessageResponse } from '../../models/api/text-message-response';
 
 @Component({
 	selector: 'app-chat',
@@ -54,17 +56,34 @@ export class ChatComponent implements OnInit {
 	public sendTextMessage(): void {
 		if (Validator.hasValue(this.textMessage)) {
 			this.conversation.addPersonMessage("Ashvir", this.textMessage)
-			this.clearTextMessage();
-	
-			this.chat();
+			this.isTyping = true;
 
-			this.scrollDown();
-		} 
-		
-		/*this.messageService.send(this.message).subscribe((response: any) => {
-			let x = response;
-		});*/
+			/*this.messageService.sendText("rick", this.textMessage).subscribe((response: any) => {
+				let x = response;
+				this.isTyping = false;
+				this.clearTextMessage();
+			}, (error: HttpErrorResponse) => {
+				console.log("Error :", error);
+				this.isTyping = false;
+			});*/
+
+			this.messageService.sendText("rick", this.textMessage).subscribe({
+				next: this.handleResponse.bind(this),
+				error: this.handleError.bind(this)
+			 })
+		}
 	};
+
+	private handleResponse(response: any): void {
+		let x = response;
+		this.isTyping = false;
+		this.clearTextMessage();
+	}
+
+	private handleError(error: HttpErrorResponse): void {
+		console.log("Error :", error);
+		this.isTyping = false;
+	}
 
 	public clearTextMessage(): void {
 		this.textMessage = "";
