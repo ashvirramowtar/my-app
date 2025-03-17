@@ -36,7 +36,7 @@ export class AuthService extends HttpService {
     }
 
     public getToken(): string {
-        let token = localStorage.getItem(TOKEN);
+        let token = localStorage.getItem(TOKEN)!;
         return token;
     }
 
