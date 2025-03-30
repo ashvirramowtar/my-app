@@ -7,6 +7,8 @@ import { ValidateEmailAddress } from '../../directives/validator-email-address.d
 import { ValidatePassword } from '../../directives/validator-password.directive';
 import { ValidateConfirmPassword } from '../../directives/validator-confirm-password.directive';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+import { User } from '../../models/user';
 
 @Component({
 	selector: 'app-registration',
@@ -35,7 +37,7 @@ export class RegistrationComponent implements OnInit {
 		this.confirmPassword = new FormControl("", { validators: ValidateConfirmPassword(this.password.value), updateOn: 'blur'});
 	}
 
-	constructor(private router: Router) {
+	constructor(private router: Router, private authService: AuthService) {
 		
 	}
 
@@ -67,10 +69,24 @@ export class RegistrationComponent implements OnInit {
 		if (this.firstName.valid && this.lastName.valid && this.cellphoneNumber.valid 
 				&& this.emailAddress.valid && this.password.valid && this.confirmPassword.valid) {
             this.isRegistering = true;
-            setTimeout(() => { 
-                this.isRegistering = false;
-                this.router.navigate(["login"])
-            }, 1000);
+
+			let user = new User(this.firstName.value, this.lastName.value, this.emailAddress.value, this.cellphoneNumber.value, this.password.value);
+
+			this.authService.register(user).subscribe({
+				next: (response => {
+					this.isRegistering = false;
+
+					if (response.Code == 201)
+						this.router.navigate(["login"])
+					else if (response.Code == 409)
+						this.message = response.Message;
+
+				}),
+				error: (error => {
+					console.log("Error :", error);
+					this.isRegistering = false;
+				})
+			 });
         }
 	}	
 }

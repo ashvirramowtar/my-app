@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { AuthGuard } from './guards/auth.guard';
-import { authInterceptorProviders, loggingInterceptor, AuthInterceptor } from './interceptors/auth.interceptor';
+import { authInterceptor } from './interceptors/auth.interceptor';
 
 import { LoginComponent } from './components/login/login.component';
 import { ChatComponent } from './components/chat/chat.component';
@@ -30,7 +30,7 @@ import { LoaderComponent } from './components/loader/loader.component';
   ],
   providers: [
     AuthGuard,
-    provideHttpClient(withInterceptors([loggingInterceptor]))
+    provideHttpClient(withInterceptors([authInterceptor]))
   ],
   bootstrap: [AppComponent]
 })

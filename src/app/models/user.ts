@@ -30,7 +30,7 @@ export class User {
         this._lastName = lastName;
         this._emailAddress = emailAddress;
         this._cellphoneNumber = cellphoneNumber;
-        this._password;
+        this._password = password;
     }
     
 }

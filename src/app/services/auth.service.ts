@@ -5,16 +5,21 @@ import { map } from "rxjs/operators";
 import { Validator } from "../directives/validator";
 import { TOKEN } from "../helpers/constants";
 import { HttpService } from "./http.service";
+import { User } from "../models/user";
+import { RegisterUserResponse } from "../models/api/register-user-response";
+import { TypeMapper } from "../mappers/type-mapper";
+import { LoginUserResponse } from "../models/api/login-user-response";
 
 const ENDPOINT = {
     LOGIN: 'login',
+    REGISTER: 'register',
 };
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService extends HttpService {
-    private applicationName = "/auth/";
+    private applicationName = "/api/";
 
     constructor(http: HttpClient) {
         super(http);
@@ -27,22 +32,14 @@ export class AuthService extends HttpService {
         console.log("current path: " + this.path);
     }
 
-    public login(username: string, password: string): Observable<any> {
-        let request = { username: username, password: password };
-        return super.postWithoutIntercept(ENDPOINT.LOGIN, request).pipe(map((response: any) => {
-            localStorage.setItem(TOKEN, response.token)
-            return true;
-        }));
+    public login(emailAddress: string, password: string): Observable<LoginUserResponse> {
+        let request = TypeMapper.buildLoginUserRequest(emailAddress, password);
+        return super.postWithoutIntercept(ENDPOINT.LOGIN, request);
     }
 
-    public getToken(): string {
-        let token = localStorage.getItem(TOKEN)!;
-        return token;
-    }
-
-    public hasToken(): boolean {
-        let token = this.getToken();
-        return Validator.hasValue(token);
+    public register(user: User): Observable<RegisterUserResponse> {
+        let request = TypeMapper.buildRegisterUserRequest(user);
+        return super.postWithoutIntercept(ENDPOINT.REGISTER, request);
     }
 
     public logOut(): void {
