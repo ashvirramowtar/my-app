@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
     public ngOnInit(): void {
         this.isLoggingIn = false;
         this.message = "";
-        this.emailAddress = new FormControl("ashvirramowtar@gmail.com", { validators: ValidateEmailAddress, updateOn: 'blur' });
-        this.password = new FormControl("ashvirramowtar@gmail.com", { validators: ValidatePassword, updateOn: 'blur' });
+        this.emailAddress = new FormControl("", { validators: ValidateEmailAddress, updateOn: 'blur' });
+        this.password = new FormControl("", { validators: ValidatePassword, updateOn: 'blur' });
     }
 
     public login(): void {
