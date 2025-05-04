@@ -4,7 +4,9 @@ import { AuthService } from '../../services/auth.service';
 import { Validator } from '../../directives/validator';
 import { Conversation } from '../../models/conversation';
 import { Router } from '@angular/router';
-import { TOKEN } from '../../helpers/constants';
+import { CHARACTER, TOKEN } from '../../helpers/constants';
+import { UserDetail } from '../../models/user-detail';
+import { CharacterDetail } from '../../models/character-detail';
 
 @Component({
 	selector: 'app-chat',
@@ -19,6 +21,8 @@ export class ChatComponent implements OnInit {
 
 	textMessage: string;
 	conversation: Conversation;
+	character: CharacterDetail;
+	user: UserDetail;
 
 	public constructor(private messageService: MessageService, private authService: AuthService, private router: Router) {
 		
@@ -32,7 +36,8 @@ export class ChatComponent implements OnInit {
 
 		this.authService.getUserDetail().subscribe({
 			next: (response => {
-				let user = response;
+				this.user = response;
+				this.character = CHARACTER(response.Character);
 			}),
 			error: (error => {
 				console.log("Error :", error);
@@ -42,18 +47,18 @@ export class ChatComponent implements OnInit {
 	
 	public sendTextMessage(): void {
 		if (Validator.hasValue(this.textMessage)) {
-			this.conversation.addPersonMessage("Ashvir", this.textMessage)
+			this.conversation.addPersonMessage(this.user.FirstName, this.textMessage)
 			this.isTyping = true;
 
 			let copyOfMessage = this.textMessage;
 			this.clearTextMessage();
 
-			this.messageService.sendText("rick", copyOfMessage).subscribe({
+			this.messageService.sendText(this.user.Character, copyOfMessage).subscribe({
 				next: (response => {
 					let characterMessage = response.response;
-					this.conversation.addCharacterMessage("Rick", characterMessage);
+					let characterName = CHARACTER(this.user.Character).name!; //Needs to come from response.response
+					this.conversation.addCharacterMessage(characterName, characterMessage);
 					this.isTyping = false;
-					
 				}),
 				error: (error => {
 					console.log("Error :", error);
@@ -81,8 +86,9 @@ export class ChatComponent implements OnInit {
 	public logOut(): void {
 		this.isLoggingOut = true;
         setTimeout(() => { 
+			this.authService.logOut();
             this.isLoggingOut = false;
             this.router.navigate(["login"])
-        }, 1000);
+        }, 500);
 	}
 }

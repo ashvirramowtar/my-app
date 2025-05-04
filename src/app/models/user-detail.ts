@@ -3,6 +3,5 @@ export class UserDetail {
     public LastName: string;
     public EmailAddress: string;
     public CellphoneNumber: string;
-    public CharacterName: string;
-    public CharacterModel: string;
+    public Character: string;
 }

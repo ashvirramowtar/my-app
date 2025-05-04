@@ -5,18 +5,12 @@
                 <div id="plist" class="people-list">
                     <ul class="list-unstyled chat-list mt-2 mb-0">
                         <li class="clearfix">
-                            <img src="/assets/avatars/rick-sanchez.png" alt="avatar">
+                            <!--<img src="/assets/avatars/{{character.image}}" alt="avatar">-->
                             <div class="about">
-                                <div class="name">Rick Sanchez</div>
+                                <div class="name">Welcome back <strong>{{user.FirstName}}</strong></div>
                                 <!--<div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>-->
                             </div>
                         </li>
-                        <!--<li class="clearfix">
-                            <img src="/assets/avatars/panic-and-pain.png" alt="avatar">
-                            <div class="about">
-                                <div class="name">Panic and Pain</div>
-                            </div>
-                        </li>-->
                     </ul>
                 </div>
                 <div class="chat">
@@ -24,10 +18,10 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                    <img src="/assets/avatars/rick-sanchez.png" alt="avatar">
+                                    <img src="/assets/avatars/{{character.image}}" alt="avatar">
                                 </a>
                                 <div class="chat-about">
-                                    <h6 class="m-b-0" style="padding-top: 10px !important;">Rick Sanchez</h6>
+                                    <h6 class="m-b-0" style="padding-top: 10px !important;">You are in a chat room with {{character.name}}</h6>
                                     <!--<small>Last seen: 2 hours ago</small>-->
                                 </div>
                             </div>
