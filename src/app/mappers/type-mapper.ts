@@ -14,7 +14,7 @@ export class TypeMapper {
 
     public static buildRegisterUserRequest(user: User): RegisterUserRequest {
         let request = new RegisterUserRequest(user.firstName, user.lastName, user.cellphoneNumber,
-            user.emailAddress, user.password, "");
+            user.emailAddress, user.password, user.characterCode);
 
         return request;
     }

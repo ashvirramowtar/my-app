@@ -1,7 +1,7 @@
 import { HttpEvent, HttpRequest, HttpHeaders, HttpHandlerFn, } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
 import { InterceptorSkipHeader } from '../services/http.service';
+import { TOKEN } from '../helpers/constants';
 
 export function authInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
     if (request.headers.has(InterceptorSkipHeader)) {
@@ -11,7 +11,7 @@ export function authInterceptor(request: HttpRequest<unknown>, next: HttpHandler
         return next(clonedRequest);
     }
     else {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem(TOKEN)!;
         
         let clonedRequest = request.clone({
             headers: new HttpHeaders({ "Authorization": token })

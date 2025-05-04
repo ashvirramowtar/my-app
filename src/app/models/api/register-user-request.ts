@@ -7,12 +7,12 @@ export class RegisterUserRequest {
     public Character: string;
 
     public constructor(firstName: string, lastName: string, cellphoneNumber: string, 
-            emailAddress: string, password: string, character: string) {
+            emailAddress: string, password: string, characterCode: string) {
         this.FirstName = firstName;
         this.LastName = lastName;
         this.CellphoneNumber = cellphoneNumber;
         this.EmailAddress = emailAddress;
         this.Password = password;
-        this.Character = character;
+        this.Character = characterCode;
     }
 }

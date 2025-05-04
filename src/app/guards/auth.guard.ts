@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from "@angular/router";
 import { AuthService } from '../services/auth.service';
+import { TOKEN } from "../helpers/constants";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -9,7 +10,8 @@ export class AuthGuard implements CanActivate {
     }
     
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : boolean {
-        if (this.authService.hasToken())
+        let token = localStorage.getItem(TOKEN);
+        if (token != null)
             return true;
         else {
             console.log("User is not authorised.");

@@ -25,12 +25,19 @@ export class User {
         return this._password;
     }
     
-    public constructor(firstName: string, lastName: string, emailAddress: string, cellphoneNumber: string, password: string) {
+    private _characterCode : string;
+    public get characterCode() : string {
+        return this._characterCode;
+    }
+    
+    public constructor(firstName: string, lastName: string, emailAddress: string, cellphoneNumber: string, 
+            password: string, characterCode: string) {
         this._firstName = firstName;
         this._lastName = lastName;
         this._emailAddress = emailAddress;
         this._cellphoneNumber = cellphoneNumber;
         this._password = password;
+        this._characterCode = characterCode;
     }
     
 }

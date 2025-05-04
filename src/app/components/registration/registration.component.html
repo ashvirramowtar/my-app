@@ -36,6 +36,16 @@
                         (blur)="reinitialisePasswordValidators()" />
                     <div class="error-message-text">{{confirmPassword.errors?.message}}&nbsp;</div>
                 </div>
+                <div class="form-group padding">
+                    <select class="form-select" id="character" [formControl]="character"
+                        [ngClass]="(character.touched || character.dirty) ? character.errors != null ? 'is-invalid' : '' : ''">
+                        <option [selected]="true" [value]="null" disabled>Your character</option>
+                        <option *ngFor="let character of characters" [value]="character.code">
+                            {{character.name}}
+                        </option>
+                    </select>
+                    <div class="error-message-text">{{character.errors?.message}}&nbsp;</div>
+                </div>
                 <div class="form-group">
                     <button class="btn btn-primary main-button" type="submit" [disabled]="isRegistering">
                         <span *ngIf="!isRegistering">

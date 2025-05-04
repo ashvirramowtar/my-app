@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from '../../services/message.service';
+import { AuthService } from '../../services/auth.service';
 import { Validator } from '../../directives/validator';
 import { Conversation } from '../../models/conversation';
 import { Router } from '@angular/router';
+import { TOKEN } from '../../helpers/constants';
 
 @Component({
 	selector: 'app-chat',
 	standalone: false,
-	providers: [ MessageService ],
+	providers: [ MessageService, AuthService ],
 	templateUrl: './chat.component.html',
 	styleUrl: './chat.component.css'
 })
@@ -18,17 +20,24 @@ export class ChatComponent implements OnInit {
 	textMessage: string;
 	conversation: Conversation;
 
-	public constructor(private messageService: MessageService, private router: Router) {
+	public constructor(private messageService: MessageService, private authService: AuthService, private router: Router) {
 		
 	}
 	
 	public ngOnInit(): void {
 		this.isTyping = false;
 		this.isLoggingOut = false;
-
 		this.textMessage = "";
-
 		this.conversation = new Conversation();
+
+		this.authService.getUserDetail().subscribe({
+			next: (response => {
+				let user = response;
+			}),
+			error: (error => {
+				console.log("Error :", error);
+			})
+		 });
 	}
 	
 	public sendTextMessage(): void {

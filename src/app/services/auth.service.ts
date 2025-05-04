@@ -9,10 +9,12 @@ import { User } from "../models/user";
 import { RegisterUserResponse } from "../models/api/register-user-response";
 import { TypeMapper } from "../mappers/type-mapper";
 import { LoginUserResponse } from "../models/api/login-user-response";
+import { UserDetail } from "../models/user-detail";
 
 const ENDPOINT = {
     LOGIN: 'login',
     REGISTER: 'register',
+    USER_DETAILS: 'userdetails'
 };
 
 @Injectable({
@@ -40,6 +42,10 @@ export class AuthService extends HttpService {
     public register(user: User): Observable<RegisterUserResponse> {
         let request = TypeMapper.buildRegisterUserRequest(user);
         return super.postWithoutIntercept(ENDPOINT.REGISTER, request);
+    }
+
+    public getUserDetail(): Observable<UserDetail> {
+        return super.get(ENDPOINT.USER_DETAILS);
     }
 
     public logOut(): void {

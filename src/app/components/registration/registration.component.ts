@@ -6,9 +6,12 @@ import { ValidateCellphoneNumber } from '../../directives/validator-cellphone-nu
 import { ValidateEmailAddress } from '../../directives/validator-email-address.directive';
 import { ValidatePassword } from '../../directives/validator-password.directive';
 import { ValidateConfirmPassword } from '../../directives/validator-confirm-password.directive';
+import { ValidateCharacter } from '../../directives/validator-character.directive';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
+import { CharacterDetail } from '../../models/character-detail';
+import { CHARACTERS } from '../../helpers/constants';
 
 @Component({
 	selector: 'app-registration',
@@ -18,23 +21,29 @@ import { User } from '../../models/user';
 })
 export class RegistrationComponent implements OnInit {
 	isRegistering: boolean;
+	message: string;
+	characters: CharacterDetail[];
+
 	firstName: FormControl;
 	lastName: FormControl;
 	cellphoneNumber: FormControl;
 	emailAddress: FormControl;
 	password: FormControl;
 	confirmPassword: FormControl;
-	message: string;
+	character: FormControl;
 		
 	public ngOnInit(): void {
 		this.isRegistering = false;
 		this.message = "";
+		this.characters = CHARACTERS;
+
 		this.firstName = new FormControl("", { validators: ValidateFirstName, updateOn: 'blur' });
 		this.lastName = new FormControl("", { validators: ValidateLastName, updateOn: 'blur' });
 		this.cellphoneNumber = new FormControl("" , { validators: ValidateCellphoneNumber, updateOn: 'blur' });
 		this.emailAddress = new FormControl("", { validators: ValidateEmailAddress, updateOn: 'blur' });
 		this.password = new FormControl("", { validators: ValidatePassword, updateOn: 'blur' });
 		this.confirmPassword = new FormControl("", { validators: ValidateConfirmPassword(this.password.value), updateOn: 'blur'});
+		this.character = new FormControl(null, { validators: ValidateCharacter, updateOn: 'change' });
 	}
 
 	constructor(private router: Router, private authService: AuthService) {
@@ -56,6 +65,7 @@ export class RegistrationComponent implements OnInit {
 		this.emailAddress.markAsTouched();
 		this.password.markAsTouched();
 		this.confirmPassword.markAsTouched();
+		this.character.markAsTouched();
 		
 		this.firstName.updateValueAndValidity();
 		this.lastName.updateValueAndValidity();
@@ -63,14 +73,16 @@ export class RegistrationComponent implements OnInit {
 		this.emailAddress.updateValueAndValidity();
 		this.password.updateValueAndValidity();
 		this.confirmPassword.updateValueAndValidity();
+		this.character.updateValueAndValidity();
 
 		this.reinitialisePasswordValidators();
 
-		if (this.firstName.valid && this.lastName.valid && this.cellphoneNumber.valid 
-				&& this.emailAddress.valid && this.password.valid && this.confirmPassword.valid) {
+		if (this.firstName.valid && this.lastName.valid && this.cellphoneNumber.valid && this.emailAddress.valid 
+				&& this.password.valid && this.confirmPassword.valid && this.character.valid) {
             this.isRegistering = true;
 
-			let user = new User(this.firstName.value, this.lastName.value, this.emailAddress.value, this.cellphoneNumber.value, this.password.value);
+			let user = new User(this.firstName.value, this.lastName.value, this.emailAddress.value, 
+				this.cellphoneNumber.value, this.password.value, this.character.value);
 
 			this.authService.register(user).subscribe({
 				next: (response => {

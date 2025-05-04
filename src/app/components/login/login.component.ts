@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 					if (response.Code == 200) {
                         localStorage.setItem(TOKEN, response.Token);
                         this.isLoggingIn = false;
-                        this.router.navigate(["chat"], { firstName: "" });
+                        this.router.navigate(["chat"]);
                     }
 					else {
                         this.isLoggingIn = false; 
