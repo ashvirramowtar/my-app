@@ -4,18 +4,19 @@ import { Observable } from 'rxjs';
 export const InterceptorSkipHeader = 'X-Skip-Interceptor';
 const headers = new HttpHeaders().set(InterceptorSkipHeader, '');
 
-export class HttpService {
+export abstract class HttpService {
     protected path: string;
 
     constructor(private httpClient: HttpClient) {
-        
+        this.path = this.getDomain() + "/" + this.getApplicationName() + "/";
+        console.log("current path: " + this.path);
     }
 
     protected getDomain(): string {
-        let domain = 'http://localhost:5250';
-
-        return domain;
+        return 'http://localhost:5250';
     }
+
+    protected abstract getApplicationName(): string;
 
     protected get<TResponse>(endpoint: string): Observable<TResponse> {
         return this.httpClient.get<TResponse>(this.path + endpoint);

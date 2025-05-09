@@ -21,17 +21,17 @@ const ENDPOINT = {
     providedIn: 'root'
 })
 export class AuthService extends HttpService {
-    private applicationName = "/api/";
 
     constructor(http: HttpClient) {
         super(http);
-        this.initialisePath();
     }
 
-    private initialisePath(): void {
-        let domain = this.getDomain();
-        this.path = domain + this.applicationName;
-        console.log("current path: " + this.path);
+    public override getDomain(): string {
+        return "https://localhost:44355";
+    }
+
+    public override getApplicationName(): string {
+        return "auth";
     }
 
     public login(emailAddress: string, password: string): Observable<LoginUserResponse> {
