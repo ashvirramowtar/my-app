@@ -1,3 +1,3 @@
 export class RegisterUserResponse {
-    public Message: string;
+    public message: string;
 }

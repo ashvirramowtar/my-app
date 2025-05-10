@@ -1,3 +1,3 @@
 export class LoginUserResponse {
-    public Token: string;
+    public token: string;
 }

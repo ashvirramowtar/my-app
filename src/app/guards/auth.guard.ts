@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
     
     public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : boolean {
         let token = localStorage.getItem(TOKEN);
-        if (token != null)
+        if ((token != null) && (token != "undefined"))
             return true;
         else {
             console.log("User is not authorised.");

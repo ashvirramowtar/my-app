@@ -37,7 +37,7 @@ export class ChatComponent implements OnInit {
 		this.authService.getUserDetail().subscribe({
 			next: (response => {
 				this.user = response;
-				this.character = CHARACTER(response.Character);
+				this.character = CHARACTER(response.character);
 			}),
 			error: (error => {
 				console.log("Error :", error);
@@ -47,16 +47,16 @@ export class ChatComponent implements OnInit {
 	
 	public sendTextMessage(): void {
 		if (Validator.hasValue(this.textMessage)) {
-			this.conversation.addPersonMessage(this.user.FirstName, this.textMessage)
+			this.conversation.addPersonMessage(this.user.firstName, this.textMessage)
 			this.isTyping = true;
 
 			let copyOfMessage = this.textMessage;
 			this.clearTextMessage();
 
-			this.messageService.sendText(this.user.Character, copyOfMessage).subscribe({
+			this.messageService.sendText(this.user.character, copyOfMessage).subscribe({
 				next: (response => {
 					let characterMessage = response.response;
-					let characterName = CHARACTER(this.user.Character).name!; //Needs to come from response.response
+					let characterName = CHARACTER(this.user.character).name!; //Needs to come from response.response
 					this.conversation.addCharacterMessage(characterName, characterMessage);
 					this.isTyping = false;
 				}),
