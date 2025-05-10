@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user';
 import { CharacterDetail } from '../../models/character-detail';
 import { CHARACTERS } from '../../helpers/constants';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 	selector: 'app-registration',
@@ -87,15 +88,17 @@ export class RegistrationComponent implements OnInit {
 			this.authService.register(user).subscribe({
 				next: (response => {
 					this.isRegistering = false;
-
-					if (response.Code == 201)
-						this.router.navigate(["login"])
-					else if (response.Code == 409)
-						this.message = response.Message;
-
+					this.router.navigate(["login"])
 				}),
-				error: (error => {
-					console.log("Error :", error);
+				error: ((error: HttpErrorResponse) => {
+					if (error.status == 409) {
+						//this.message = "This email address is already registered."
+						this.emailAddress.setErrors(new Error("This email address is already registered."));
+					}
+					else {
+						console.log("Error :", error);
+					}
+					
 					this.isRegistering = false;
 				})
 			 });

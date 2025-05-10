@@ -60,7 +60,7 @@ export class ChatComponent implements OnInit {
 					this.conversation.addCharacterMessage(characterName, characterMessage);
 					this.isTyping = false;
 				}),
-				error: (error => {
+				error: ((error) => {
 					console.log("Error :", error);
 					this.isTyping = false;
 				})

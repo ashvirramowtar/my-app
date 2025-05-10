@@ -27,7 +27,7 @@ export class AuthService extends HttpService {
     }
 
     public override getDomain(): string {
-        return "https://localhost:44355";
+        return "https://localhost:7173";
     }
 
     public override getApplicationName(): string {

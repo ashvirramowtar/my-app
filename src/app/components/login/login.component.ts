@@ -5,6 +5,8 @@ import { ValidateEmailAddress } from '../../directives/validator-email-address.d
 import { ValidatePassword } from '../../directives/validator-password.directive'
 import { AuthService } from '../../services/auth.service';
 import { TOKEN } from '../../helpers/constants';
+import { HttpErrorResponse } from '@angular/common/http';
+import { LoginUserResponse } from '../../models/api/login-user-response';
 
 @Component({
 	selector: 'app-login',
@@ -40,19 +42,19 @@ export class LoginComponent implements OnInit {
             this.isLoggingIn = true;
 
             this.authService.login(this.emailAddress.value, this.password.value).subscribe({
-				next: (response => {
-					if (response.Code == 200) {
-                        localStorage.setItem(TOKEN, response.Token);
-                        this.isLoggingIn = false;
-                        this.router.navigate(["chat"]);
-                    }
-					else {
-                        this.isLoggingIn = false; 
+				next: ((response: LoginUserResponse) => {
+					localStorage.setItem(TOKEN, response.Token);
+                    this.isLoggingIn = false;
+                    this.router.navigate(["chat"]);
+                }),
+				error: ((error: HttpErrorResponse) => {
+                    if (error.status == 401) {
                         this.message = "Username or password is incorrect."; 
+					}
+                    else {
+                        console.log(error);
                     }
-				}),
-				error: (error => {
-					console.log("Error :", error);
+                    
 					this.isLoggingIn = false;
 				})
 			 });
